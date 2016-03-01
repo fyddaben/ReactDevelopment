@@ -1,3 +1,4 @@
+var config = global.config;
 exports.index = function(req, res) {
-  res.send('ok');
+  res.render('index', {title: 'hello', static: config.static});
 }
