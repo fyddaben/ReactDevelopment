@@ -6,6 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var http = require('http');
+var httpProxy = require('http-proxy');
+
+var proxy = httpProxy.createProxyServer();
+
 
 var log4js = require('log4js');
 
@@ -18,7 +22,7 @@ var logger = log4js.getLogger('server');
 
 var app = express();
 
-var env = app.get('env');
+var env = process.env.NODE_ENV;
 
 var config = require('./config')[env];
 
@@ -39,7 +43,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes.index);
+app.get('/', routes.index);
+if (env === 'development') {
+
+  var bundle = require('./bundle');
+  bundle();
+
+  var proxyCallback = function(req, res) {
+    proxy.web(req, res, {
+      target: config.static_path + ':' +  config.static_port + '/public'
+    });
+  }
+
+  // to webpack-dev-server
+  app.get('/js/*', proxyCallback);
+  app.get('/css/*', proxyCallback);
+}
+
 
 var server = http.createServer(app);
 server.listen(port);
