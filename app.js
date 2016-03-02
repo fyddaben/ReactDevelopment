@@ -6,11 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var http = require('http');
-var httpProxy = require('http-proxy');
-
-var proxy = httpProxy.createProxyServer();
-
-
 var log4js = require('log4js');
 
 log4js.loadAppender('file');
@@ -43,13 +38,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.get('/', routes.index);
+app.get('/mobile', routes.mobile);
 if (env === 'development') {
 
   var bundle = require('./bundle');
   bundle();
+  var httpProxy = require('http-proxy');
+
+  var proxy = httpProxy.createProxyServer();
 
   var proxyCallback = function(req, res) {
-    console.log('sdf');
     proxy.web(req, res, {
       target: config.static_path + ':' +  config.static_port
     });

@@ -1,6 +1,6 @@
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
-var config = require('./webpack.dev.config');
+var config = require('./webpack.config');
 var port  = global.config.static_port;
 var log4js = require('log4js');
 
