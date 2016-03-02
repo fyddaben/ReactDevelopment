@@ -41,7 +41,6 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', routes.index);
 if (env === 'development') {
@@ -50,14 +49,16 @@ if (env === 'development') {
   bundle();
 
   var proxyCallback = function(req, res) {
+    console.log('sdf');
     proxy.web(req, res, {
-      target: config.static_path + ':' +  config.static_port + '/public'
+      target: config.static_path + ':' +  config.static_port
     });
   }
 
   // to webpack-dev-server
-  app.get('/js/*', proxyCallback);
-  app.get('/css/*', proxyCallback);
+  app.get('/public/*', proxyCallback);
+} else {
+  app.use(express.static(path.join(__dirname, 'public')));
 }
 
 

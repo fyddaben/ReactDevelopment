@@ -19,7 +19,7 @@ module.exports = {
   //},
   output: {
     path: path.resolve(__dirname, 'public'),
-    publicPath: config.static_path + ':' + config.static_port + '/public',
+    publicPath: config.static_path + ':' + config.static_port + config.relativePath,
     filename: 'js/[name].js',
   },
   module: {
