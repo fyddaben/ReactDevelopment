@@ -6,6 +6,8 @@ var pathToReact = path.resolve(node_modules, 'react/dist/react.min.js');
 var pathToReactDom = path.resolve(node_modules, 'react/lib/ReactDom.js');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var srcDir = path.resolve(__dirname, 'src');
+var AssetsPlugin = require('assets-webpack-plugin');
+
 var glob = require('glob');
 var env = process.env.NODE_ENV;
 var config = require('./config')[env];
@@ -31,9 +33,8 @@ var entries = function() {
 var entriPath = entries();
 var jsLoaderStr = 'react-hot!babel-loader?presets[]=react,presets[]=es2015';
 var scssLoaderStr = ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader');
-var pluginList = [
-    new ExtractTextPlugin("css/[name].css")
-];
+var pluginList = [];
+var jsOutputName = '';
 if (isProduction) {
   jsLoaderStr = 'babel-loader?presets[]=react,presets[]=es2015';
   scssLoaderStr = ExtractTextPlugin.extract('style-loader', 'css-loader?minimize!sass-loader');
@@ -44,10 +45,31 @@ if (isProduction) {
       }
     })
   );
+  pluginList.push(
+    new AssetsPlugin({
+      filename: 'assets.json',
+      prettyPrint: true,
+      fullPath: false
+    })
+  );
+  pluginList.push(
+    new ExtractTextPlugin("css/[name]_[chunkhash:8].css")
+  );
+  jsOutputName = 'js/[name]_[chunkhash:8].js';
 } else {
   pluginList.push(
     new webpack.HotModuleReplacementPlugin()
   );
+  pluginList.push(
+    new ExtractTextPlugin("css/[name].css")
+  );
+  jsOutputName = 'js/[name].js';
+}
+var publicPath = '';
+if (config.static_port) {
+  publicPath = config.static_path + ':' + config.static_port + config.relativePath;
+} else {
+  publicPath = config.static_path  + config.relativePath;
 }
 module.exports = {
   entry: entriPath,
@@ -55,7 +77,7 @@ module.exports = {
     path: path.resolve(__dirname, 'public'),
     // 主要用于code spling
     publicPath: config.static_path + ':' + config.static_port + config.relativePath,
-    filename: 'js/[name].js',
+    filename: jsOutputName,
   },
   module: {
     loaders: [

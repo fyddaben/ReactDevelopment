@@ -17,7 +17,7 @@ var Input = React.createClass({
     return (
       <div>
       <input type="text" value={value} onChange={this.handleChange}/>
-      <p>{value} daben </p>
+      <p>{value} daben ok </p>
       </div>
     )
   }

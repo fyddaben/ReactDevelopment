@@ -10,10 +10,10 @@ var config = {
   },
   "production": {
     "server_port": 3000,
-    "static_port": 80,
-    "static_ip": 'www.mi.com',
+    "static_port": 3000,
+    "static_ip": '127.0.0.1',
     "relativePath": '/',
-    "static_path": 'http://www.mi.com'
+    "static_path": 'http://127.0.0.1'
   }
 };
 module.exports = config;

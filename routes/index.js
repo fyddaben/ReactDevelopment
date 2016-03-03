@@ -1,8 +1,45 @@
+var changeFileName = function(name) {
+  var fs = require('fs');
+  var env = process.env.NODE_ENV;
+  var isProduction = env === 'production';
+  if (isProduction) {
+    var assetsStr = fs.readFileSync('assets.json','utf8');
+    var assetsJson = JSON.parse(assetsStr);
+    var jsName = assetsJson[name].js;
+    if (jsName.lastIndexOf('/') != -1) {
+      jsName = jsName.substring(jsName.lastIndexOf('/') + 1);
+    }
+    var cssName = assetsJson[name].css;
+    if (cssName.lastIndexOf('/') != -1) {
+      cssName = cssName.substring(cssName.lastIndexOf('/') + 1);
+    }
+    return {
+      "js": jsName,
+      "css": cssName
+    };
+  } else {
+    return {
+      "js": name + ".js",
+      "css": name + ".css"
+    };
+  }
+}
+
 exports.index = function(req, res) {
   var config = global.config;
-  res.render('index', {title: 'hello', static: config.relativePath});
+  var fileJson = changeFileName('index');
+  res.render('index', {
+    title: 'hello index',
+    static: config.relativePath,
+    fileJson: fileJson
+  });
 }
 exports.mobile = function(req, res) {
   var config = global.config;
-  res.render('mobile', {title: 'hello', static: config.relativePath});
+  var fileJson = changeFileName('mobile');
+  res.render('mobile', {
+    title: 'hello mobile',
+    static: config.relativePath,
+    fileJson: fileJson
+  });
 }
