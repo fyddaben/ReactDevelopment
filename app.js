@@ -14,7 +14,6 @@ log4js.addAppender(log4js.appenders.file('logs/app.log'), 'server');
 
 var logger = log4js.getLogger('server');
 
-
 var app = express();
 
 var env = process.env.NODE_ENV;
