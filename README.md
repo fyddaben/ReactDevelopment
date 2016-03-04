@@ -45,15 +45,15 @@ npm run build && npm run reStartServer
 
 ## 学习文章链接
 
-[http://react-china.org/t/webpack/2658/10](解决后端引用，改变Hash文件名的问题)
+[解决后端引用，改变Hash文件名的问题](http://react-china.org/t/webpack/2658/10)
 
 
-[http://javascript.ruanyifeng.com/nodejs/packagejson.html](package.json文件 -- JavaScript 标准参考教程（alpha）)
+[package.json文件 -- JavaScript 标准参考教程（alpha）](http://javascript.ruanyifeng.com/nodejs/packagejson.html)
 
 
-[http://rhadow.github.io/2015/05/30/webpack-loaders-and-plugins/](深入了解 Webpack Plugins)
+[深入了解 Webpack Plugins](http://rhadow.github.io/2015/05/30/webpack-loaders-and-plugins/)
 
-[http://www.christianalfoni.com/articles/2015_04_19_The-ultimate-webpack-setup](christianalfoni - The ultimate webpack setup)
+[christianalfoni - The ultimate webpack setup](http://www.christianalfoni.com/articles/2015_04_19_The-ultimate-webpack-setup)
 
-[http://www.infoq.com/cn/articles/react-and-webpack](深入浅出React（二）：React开发神器Webpack)
+[深入浅出React（二）：React开发神器Webpack](http://www.infoq.com/cn/articles/react-and-webpack)
 
