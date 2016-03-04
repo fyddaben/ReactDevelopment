@@ -5,6 +5,7 @@
   "scripts": {
     "devServer": "pm2 start ecosystem.json",
     "server": "pm2 start ecosystem.json --env production",
+    "reStartServer": "pm2 reload ecosystem.json --env production",
     "logs": "pm2 logs benApp",
     "build": "NODE_ENV=production webpack"
   },

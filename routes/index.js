@@ -3,20 +3,25 @@ var changeFileName = function(name) {
   var env = process.env.NODE_ENV;
   var isProduction = env === 'production';
   if (isProduction) {
-    var assetsStr = fs.readFileSync('assets.json','utf8');
-    var assetsJson = JSON.parse(assetsStr);
+    var assetsJson = require('../assets.json');
+
     var jsName = assetsJson[name].js;
+
     if (jsName.lastIndexOf('/') != -1) {
       jsName = jsName.substring(jsName.lastIndexOf('/') + 1);
     }
+
     var cssName = assetsJson[name].css;
+
     if (cssName.lastIndexOf('/') != -1) {
       cssName = cssName.substring(cssName.lastIndexOf('/') + 1);
     }
+
     return {
       "js": jsName,
       "css": cssName
     };
+
   } else {
     return {
       "js": name + ".js",
